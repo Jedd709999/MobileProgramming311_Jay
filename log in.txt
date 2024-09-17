@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup Form</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 20px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            background: #e8e8e8;
+        }
+
+        button {
+            background-color: #008CBA;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        button:hover {
+            opacity: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            background-color: #fff;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 0 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: #ddd;
+        }
+
+        .signup-link {
+            text-align: center;
+        }
+
+        .signup-link a {
+            color: #008CBA;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .form-switch {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .form-switch label {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .form-switch input {
+            display: none;
+        }
+
+        .form-switch label::before {
+            content: "";
+            display: inline-block;
+            width: 30px;
+            height: 16px;
+            background-color: #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-right: 5px;
+        }
+
+        .form-switch input:checked + label::before {
+            background-color: #008CBA;
+        }
+
+        .form-switch input:checked + label::after {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .form-switch label::after {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .form-switch label::before {
+            content: "";
+            display: inline-block;
+            width: 30px;
+            height: 16px;
+            background-color: #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-right: 5px;
+        }
+
+        .form-switch input:checked + label::before {
+            background-color: #008CBA;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="login-form" class="form-group">
+            <h2>Welcome Back!</h2>
+            <p>Please sign in to your account</p>
+            <input type="text" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button onclick="login()">Sign In</button>
+            <div class="social-links">
+                <a href="#">Sign In With Google</a>
+                <a href="#">Sign In With Facebook</a>
+            </div>
+            <div class="signup-link">
+                <a href="#" onclick="switchForm('signup-form')">Don't Have An Account? Sign Up</a>
+            </div>
+        </div>
+
+        <div id="signup-form" class="form-group" style="display: none;">
+            <h2>Create New Account</h2>
+            <p>Please fill in the form to continue</p>
+            <input type="text" id="fullname" placeholder="Full Name" />
+            <input type="email" id="email" placeholder="Email Address" />
+            <input type="password" id="newpassword" placeholder="Password" />
+            <button onclick="signup()">Sign Up</button>
+            <div class="signup-link">
+                <a href="#" onclick="switchForm('login-form')">Have An Account? Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchForm(formId) {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById(formId).style.display = 'block';
+        }
+
+        function login() {
+            // Handle login logic here
+            // You can use AJAX to send login credentials to the server
+            // Example:
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Assuming you have a server-side script to handle login requests
+            // Send the username and password to the server
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, password: password })
+            })
+            .then(response => {
+                // Handle the response from the server
+                if (response.ok) {
+                    // Successful login
+                    console.log('Login successful!');
+                    // Redirect to the desired page
+                    window.location.href = '/dashboard';
+                } else {
+                    // Invalid credentials
+                    console.log('Invalid credentials!');
+                    // Display an error message
+                    alert('Invalid username or password!');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Display an error message
+                alert('An error occurred! Please try again later.');
+            });
+        }
+
+        function signup() {
+            // Handle signup logic here
+            // You can use AJAX to send signup details to the server
+            // Example:
+            var fullname = document.getElementById('fullname').value;
+            var email = document.getElementById('email').value;
+            var newpassword = document.getElementById('newpassword').value;
+
+            // Assuming you have a server-side script to handle signup requests
+            // Send the fullname, email, and newpassword to the server
+            fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fullname: fullname, email: email, password: newpassword })
+            })
+            .then(response => {
+                // Handle the response from the server
+                if (response.ok) {
+                    // Successful signup
+                    console.log('Signup successful!');
+                    // Redirect to the login page or a confirmation page
+                    window.location.href = '/login';
+                } else {
+                    // Error during signup
+                    console.log('Error during signup!');
+                    // Display an error message
+                    alert('An error occurred during signup! Please try again later.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Display an error message
+                alert('An error occurred! Please try again later.');
+            });
+        }
+    </script>
+</body>
+</html>
